@@ -6,34 +6,54 @@
   const fizz = document.getElementById('fizz');
   const buzz = document.getElementById('buzz');
   const btn = document.getElementById('btn');
-  const ul = document.createElement('ul');
+  const ul = document.querySelector('.result ul');
+  const result = document.querySelector('.result');
+  let nanLi = document.createElement('li');
+  nanLi.textContent = '整数値を入力してください';
+
+  function resetVal() {
+    fizz.value = '';
+    buzz.value = '';
+  }
+
   btn.addEventListener('click', (event) => {
     event.preventDefault();
-    for (let i = 1; i <= 99; i++) {
-      let li = document.createElement('li');
-      if (i % fizz.value === 0 && i % buzz.value === 0) {
-        li.textContent = `FizzBuzz ${i}`;
-        ul.appendChild(li);
-      } else if (i % fizz.value === 0) {
-        li.textContent = `Fizz ${i}`;
-        ul.appendChild(li);
-      } else if (i % buzz.value === 0) {
-        li.textContent = `Buzz ${i}`;
-        ul.appendChild(li);
-      }
-    }
-    document.body.appendChild(ul);
+    nanLi.remove();
+
     if (
-      fizz.value % 1 !== 0 ||
-      buzz.value % 1 !== 0 ||
+      !Number.isInteger(fizz.value % buzz.value) ||
       fizz.value === '' ||
       buzz.value === ''
     ) {
-      let nanLi = document.createElement('li');
-      let li = document.body.lastChild;
-      nanLi.textContent = '整数値を入力してください';
-      document.body.removeChild(li);
-      document.body.appendChild(nanLi);
+      ul.remove();
+
+      resetVal();
+      result.appendChild(nanLi);
+      document.body.appendChild(result);
+    } else if (Number.isInteger(fizz.value % buzz.value)) {
+      nanLi.remove();
+
+      for (let i = 1; i <= 99; i++) {
+        if (i % fizz.value === 0 && i % buzz.value === 0) {
+          let resultLi = document.createElement('li');
+          resultLi.textContent = `FizzBuzz ${i}`;
+          ul.appendChild(resultLi);
+        } else if (i % fizz.value === 0) {
+          let resultLi = document.createElement('li');
+
+          resultLi.textContent = `Fizz ${i}`;
+          ul.appendChild(resultLi);
+        } else if (i % buzz.value === 0) {
+          let resultLi = document.createElement('li');
+
+          resultLi.textContent = `Buzz ${i}`;
+          ul.appendChild(resultLi);
+        }
+      }
+      result.appendChild(ul);
     }
+
+    document.body.appendChild(result);
+    resetVal();
   });
 }
