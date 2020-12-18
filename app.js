@@ -16,26 +16,25 @@
     while (resultUl.firstChild) {
       resultUl.removeChild(resultUl.firstChild);
     }
-    if (
-      !Number.isInteger(fizz.value % buzz.value) ||
-      fizz.value === '' ||
-      buzz.value === ''
-    ) {
+    let integer = Number.isInteger(fizz.value % buzz.value);
+    let fizzEmpty = fizz.value === '';
+    let buzzEmpty = buzz.value === '';
+    if (!integer || fizzEmpty || buzzEmpty) {
       resultUl.appendChild(nanLi);
       document.body.appendChild(result);
-    } else if (Number.isInteger(fizz.value % buzz.value)) {
+    } else {
       for (let i = 1; i <= 99; i++) {
-        if (i % fizz.value === 0 && i % buzz.value === 0) {
-          let resultLi = document.createElement('li');
+        if (i % Number(fizz.value) === 0 && i % Number(buzz.value) === 0) {
+          const resultLi = document.createElement('li');
           resultLi.textContent = `FizzBuzz ${i}`;
           resultUl.appendChild(resultLi);
-        } else if (i % fizz.value === 0) {
-          let resultLi = document.createElement('li');
+        } else if (i % Number(fizz.value) === 0) {
+          const resultLi = document.createElement('li');
 
           resultLi.textContent = `Fizz ${i}`;
           resultUl.appendChild(resultLi);
-        } else if (i % buzz.value === 0) {
-          let resultLi = document.createElement('li');
+        } else if (i % Number(buzz.value) === 0) {
+          const resultLi = document.createElement('li');
 
           resultLi.textContent = `Buzz ${i}`;
           resultUl.appendChild(resultLi);
